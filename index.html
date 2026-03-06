@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium TOTP Generator</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://via.placeholder.com/32x32/00827f/ffffff?text=T">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/3.3.1/sha.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <header>
+                <h1>TOTP Generator</h1>
+            </header>
+
+            <!-- Configuration Inputs -->
+            <div class="input-group">
+                <label class="input-label" for="secret-input">Secret (Base32)</label>
+                <input type="text" id="secret-input" placeholder="HVR4CFHAFOWFGGFAGSA5JVTIMMPG6GMT" autocomplete="off" spellcheck="false">
+            </div>
+
+            <div class="row">
+                <div class="input-group">
+                    <label class="input-label" for="digits-select">Digits</label>
+                    <select id="digits-select">
+                        <option value="6" selected>6 Digits</option>
+                        <option value="8">8 Digits</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="period-input">Period (s)</label>
+                    <input type="number" id="period-input" value="30" min="5" max="300">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="algorithm-select">Algorithm</label>
+                <select id="algorithm-select">
+                    <option value="SHA-1" selected>SHA-1</option>
+                    <option value="SHA-256">SHA-256</option>
+                    <option value="SHA-512">SHA-512</option>
+                </select>
+            </div>
+
+            <!-- Dynamic Result Area -->
+            <div class="code-display">
+                <span id="totp-code">000 000</span>
+                <button id="copy-btn" class="copy-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+                    </svg>
+                    <span>Copy</span>
+                </button>
+            </div>
+
+            <!-- Expiration Indicator -->
+            <div class="timer-container">
+                <p class="timer-text">Expires in <span id="expiration-time">30</span> seconds.</p>
+                <div class="progress-track" id="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+            </div>
+
+            <!-- QR Code Generation Area -->
+            <div class="qr-container">
+                <div id="qrcode"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
